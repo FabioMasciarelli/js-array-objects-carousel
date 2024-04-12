@@ -34,13 +34,16 @@ const images = [
 // Nel markup allegato rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
 
 let curIndex = 0;
+let image;
+let title;
+let text;
+
 
 images.forEach((curObject, index) => {
-  const image = curObject.image;
-  const title = curObject.title;
-  const text  = curObject.text;
-  console.log(image, title, text);
 
+  image = curObject.image;
+  title = curObject.title;
+  text  = curObject.text;
   let isActive = index === 0 ? "active" : "";
 
   let result = `
@@ -63,7 +66,6 @@ images.forEach((curObject, index) => {
 
 const btnNext = $one(".my-next-hook");
 const btnBefore = $one(".my-prev-hook");
-console.log(btnBefore, btnNext);
 
 btnNext.addEventListener("click", () => {
   $one(".active").classList.remove("active");
@@ -85,3 +87,19 @@ btnBefore.addEventListener("click", () => {
   $one("[carousel-item='" + curIndex + "']").classList.add("active");
 });
 
+// aggiungere immagini interne
+
+const thumbnail = $one(".my-thumbnails");
+
+images.forEach((curImage) => {
+
+  innerImage = curImage.image;
+
+  result = `<img
+  class="img-fluid my-thumbnail"
+  src="./${innerImage}"
+  alt=""/>`;
+  
+  
+  // thumbnail.innerHTML += result;
+});
