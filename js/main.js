@@ -29,26 +29,59 @@ const images = [
   },
 ];
 
+
+//****** MILESTONE 1 ******
 // Nel markup allegato rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
 
+let curIndex = 0;
 
-images.forEach((curObject) => {
+images.forEach((curObject, index) => {
   const image = curObject.image;
   const title = curObject.title;
   const text  = curObject.text;
   console.log(image, title, text);
 
+  let isActive = index === 0 ? "active" : "";
+
   let result = `
-  <div class="my-carousel-item active" carousel-item="1">
-  <img class="img-fluid" src="./${image}" alt="Marvel's Spiderman Miles Morale picture" />
-  <div class="item-description px-3">
-    <h2>${title}</h2>
-    <p>${text}</p>
-  </div>
-</div>`;
+  <div class="my-carousel-item ${isActive}" carousel-item="${index}">
+      <img class="img-fluid" src="./${image}" alt="Marvel's Spiderman Miles Morale picture" />
+    <div class="item-description px-3">
+      <h2>${title}</h2>
+      <p>${text}</p>
+    </div>
+  </div>`;
 
 //stampo in pagina
-let print = $one(".my-carousel-images");
+  let print = $one(".my-carousel-images");
 
-print.innerHTML += result;
+  print.innerHTML += result;
 });
+
+//****** MILESTONE 2 ******
+// Aggiungere il **ciclo infinito** del carosello. Ovvero se la miniatura attiva è la prima e l'utente clicca la freccia verso destra, la miniatura che deve attivarsi sarà l'ultima e viceversa per l'ultima miniatura se l'utente clicca la freccia verso sinistra.
+
+const btnNext = $one(".my-next-hook");
+const btnBefore = $one(".my-prev-hook");
+console.log(btnBefore, btnNext);
+
+btnNext.addEventListener("click", () => {
+  $one(".active").classList.remove("active");
+  
+  curIndex = curIndex < images.length - 1 ? ++curIndex : 0;
+
+  console.log(curIndex);
+
+  $one("[carousel-item='" + curIndex + "']").classList.add("active");
+
+});
+
+btnBefore.addEventListener("click", () => {
+  $one(".active").classList.remove("active");
+
+  curIndex = curIndex === 0 ? images.length - 1 : --curIndex;
+  console.log(curIndex);
+
+  $one("[carousel-item='" + curIndex + "']").classList.add("active");
+});
+
