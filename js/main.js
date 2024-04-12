@@ -1,3 +1,6 @@
+const $one = document.querySelector.bind(document);
+const $all = document.querySelectorAll.bind(document);
+
 const images = [
   {
     image: "img/01.webp",
@@ -25,3 +28,27 @@ const images = [
     text: "Marvel's Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.",
   },
 ];
+
+// Nel markup allegato rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
+
+
+images.forEach((curObject) => {
+  const image = curObject.image;
+  const title = curObject.title;
+  const text  = curObject.text;
+  console.log(image, title, text);
+
+  let result = `
+  <div class="my-carousel-item active" carousel-item="1">
+  <img class="img-fluid" src="./${image}" alt="Marvel's Spiderman Miles Morale picture" />
+  <div class="item-description px-3">
+    <h2>${title}</h2>
+    <p>${text}</p>
+  </div>
+</div>`;
+
+//stampo in pagina
+let print = $one(".my-carousel-images");
+
+print.innerHTML += result;
+});
